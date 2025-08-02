@@ -1,0 +1,50 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group 'com.gkptan'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+    maven { url "https://mvn.mchv.eu/repository/mchv/" }
+}
+
+dependencies {
+    implementation platform('it.tdlight:tdlight-java-bom:3.4.0+td.1.8.26')
+
+    implementation group: 'it.tdlight', name: 'tdlight-java'
+    implementation group: 'it.tdlight', name: 'tdlight-natives', classifier: 'windows_amd64'
+    implementation 'org.slf4j:slf4j-api:2.0.13'
+    implementation 'org.slf4j:slf4j-simple:2.0.13'
+    implementation 'org.yaml:snakeyaml:2.2'
+    implementation 'com.google.code.gson:gson:2.13.1'
+    implementation 'ch.qos.logback:logback-classic:1.5.13'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.16.1'
+    implementation 'com.google.api-client:google-api-client:2.4.0'
+    implementation 'com.google.oauth-client:google-oauth-client-jetty:1.36.0'
+    implementation 'com.google.apis:google-api-services-sheets:v4-rev20240502-2.0.0'
+
+    // Testes
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.11.0-M1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.11.0-M1'
+}
+
+application {
+    mainClass = 'com.gkptan.Main'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': application.mainClass
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it)}
+    }
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}

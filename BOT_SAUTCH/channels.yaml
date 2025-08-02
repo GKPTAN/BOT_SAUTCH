@@ -1,0 +1,9 @@
+groups:
+  FRONT-END:
+    - HTML_E_CSS # Substitua pelo nome exato do canal ou @username
+    - JavaScript_e_TypeScript
+    - React
+  BACK-END:
+    - Java
+    - Banco_de_Dados
+    - NodeJS
